@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Illinois Nuclear Infrastructure</title>
+
+  <!-- MapLibre GL JS (vendored locally) -->
+  <link rel="stylesheet" href="vendor/maplibre-gl-4.7.1.css">
+  <script src="vendor/maplibre-gl-4.7.1.js"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Source+Serif+4:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app-layout" id="app">
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <div>
+        <h1>Illinois Nuclear Infrastructure</h1>
+        <span class="header-subtitle">The Case for a Nuclear Lifecycle Innovation Campus (beta)</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <img src="images/nb-logo.png" alt="Nuclear Barbarians" class="header-logo">
+      <img src="images/fai-logo.svg" alt="FAI" class="header-logo">
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="app-sidebar" id="sidebar">
+
+    <!-- Map Controls -->
+    <div class="map-controls">
+      <div class="section-label accent-red">Map Layers</div>
+
+      <!-- Nuclear Generation -->
+      <div class="control-group">
+        <div class="control-group-label">Nuclear Generation</div>
+        <label class="layer-toggle">
+          <input type="checkbox" data-layer="reactors" checked>
+          <span class="layer-swatch swatch-point" style="background: var(--color-red);"></span>
+          Operating reactors (6 plants)
+        </label>
+        <label class="layer-toggle">
+          <input type="checkbox" data-layer="decommissioned" checked>
+          <span class="layer-swatch swatch-point" style="background: var(--color-gray-50);"></span>
+          Decommissioned sites
+        </label>
+        <label class="layer-toggle">
+          <input type="checkbox" data-layer="isfsi" checked>
+          <span class="layer-swatch swatch-diamond" style="background: var(--color-yellow);"></span>
+          Spent fuel storage (ISFSI)
+        </label>
+      </div>
+
+      <!-- Research & Workforce -->
+      <div class="control-group">
+        <div class="control-group-label">Research &amp; Workforce</div>
+        <label class="layer-toggle">
+          <input type="checkbox" data-layer="labs" checked>
+          <span class="layer-swatch swatch-point" style="background: var(--color-blue);"></span>
+          National labs &amp; universities
+        </label>
+      </div>
+
+      <!-- Transmission -->
+      <div class="control-group">
+        <div class="control-group-label">Transmission</div>
+        <label class="layer-toggle">
+          <input type="checkbox" data-layer="transmission">
+          <span class="layer-swatch swatch-line" style="background: var(--color-blue);"></span>
+          345kV+ transmission lines
+        </label>
+      </div>
+
+      <!-- Transport Corridors -->
+      <div class="control-group">
+        <div class="control-group-label">Transport Corridors</div>
+        <label class="layer-toggle">
+          <input type="checkbox" data-layer="railroads">
+          <span class="layer-swatch swatch-line" style="background: var(--color-gray-70);"></span>
+          Class I railroads
+        </label>
+        <label class="layer-toggle">
+          <input type="checkbox" data-layer="waterways">
+          <span class="layer-swatch swatch-line" style="background: var(--color-blue); opacity: 0.6;"></span>
+          Navigable waterways
+        </label>
+        <label class="layer-toggle">
+          <input type="checkbox" data-layer="strahnet">
+          <span class="layer-swatch swatch-line" style="background: var(--color-red); opacity: 0.5;"></span>
+          STRAHNET highways
+        </label>
+      </div>
+    </div>
+
+    <!-- Illinois's Nuclear Fleet -->
+    <div class="narrative-section">
+      <div class="section-label accent-red">Illinois's Nuclear Fleet</div>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-value">11</div>
+          <div class="stat-label">Operating reactors</div>
+          <div class="stat-source">NRC 2026</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">~11.6<span class="stat-badge badge-rank">#1</span></div>
+          <div class="stat-label">GW net capacity</div>
+          <div class="stat-source">WNA/EIA</div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-value">~99</div>
+          <div class="stat-label">TWh generated (2024)</div>
+          <div class="stat-source">EIA-923</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">53%</div>
+          <div class="stat-label">of IL electricity</div>
+          <div class="stat-source">EIA 2024</div>
+        </div>
+      </div>
+
+      <p style="margin-top: var(--space-sm);">
+        Illinois operates more nuclear reactors than any other state. All six generating stations are operated by Constellation Energy, the nation's largest nuclear operator. The fleet spans both PWR (Westinghouse) and BWR (GE) designs across northern and central Illinois.
+      </p>
+
+      <details class="expandable-section">
+        <summary>Plant-by-Plant Summary</summary>
+        <div class="expandable-content">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Plant</th>
+                <th>Type</th>
+                <th style="text-align: right;">MW</th>
+                <th>License thru</th>
+              </tr>
+            </thead>
+            <tbody id="reactor-table-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+          <div class="table-source">Source: NRC Reactor Info Finder, WNA Reactor Database. Accessed <span class="access-date">2026-03-27</span>.</div>
+        </div>
+      </details>
+    </div>
+
+    <!-- NLIC Readiness -->
+    <div class="narrative-section">
+      <div class="section-label accent-blue">NLIC Readiness</div>
+
+      <p>
+        The DOE's January 2026 RFI seeks states to host campuses spanning enrichment, fuel fabrication, reactor deployment, reprocessing, and waste disposition. Illinois's existing assets address multiple criteria.
+      </p>
+
+      <div class="checklist-item">
+        <span class="checklist-status has">&#10003;</span>
+        <span><strong>Operating reactors:</strong> 11 units across 6 sites, demonstrating sustained operational capability</span>
+      </div>
+      <div class="checklist-item">
+        <span class="checklist-status has">&#10003;</span>
+        <span><strong>Spent fuel management:</strong> Morris ISFSI — only commercial away-from-reactor storage facility in the U.S. (772 MT)</span>
+      </div>
+      <div class="checklist-item">
+        <span class="checklist-status has">&#10003;</span>
+        <span><strong>National laboratory R&D:</strong> Argonne (advanced reactor design, fuel cycle research) and Fermilab (materials science)</span>
+      </div>
+      <div class="checklist-item">
+        <span class="checklist-status has">&#10003;</span>
+        <span><strong>Nuclear workforce:</strong> Constellation is the largest nuclear operator in the U.S.; UIUC trains nuclear engineers</span>
+      </div>
+      <div class="checklist-item">
+        <span class="checklist-status has">&#10003;</span>
+        <span><strong>Multimodal transport:</strong> 6 Class I carriers, 1,095 navigable waterway miles, STRAHNET highway coverage</span>
+      </div>
+      <div class="checklist-item">
+        <span class="checklist-status has">&#10003;</span>
+        <span><strong>Transmission grid:</strong> Dense 345kV+ network in PJM and MISO territories</span>
+      </div>
+      <div class="checklist-item">
+        <span class="checklist-status has">&#10003;</span>
+        <span><strong>Brownfield sites:</strong> Zion (decommissioned 2023, ISFSI remains) and Dresden 1 (SAFSTOR)</span>
+      </div>
+      <div class="checklist-item">
+        <span class="checklist-status partial">~</span>
+        <span><strong>Enrichment/fabrication:</strong> No existing facilities in IL, but Argonne has fuel cycle R&D capability</span>
+      </div>
+
+      <div class="table-source" style="margin-top: var(--space-sm);">
+        Source: DOE NLIC RFI (January 28, 2026), NRC facility data, USDOT BTS.
+      </div>
+    </div>
+
+    <!-- Transport Capability -->
+    <div class="narrative-section">
+      <div class="section-label accent-green">Transport Capability</div>
+
+      <p>
+        Moving heavy reactor modules, fuel assemblies, and spent fuel casks requires multimodal transport infrastructure. Illinois has all three modes.
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-value">6,769<span class="stat-badge badge-rank">#2</span></div>
+          <div class="stat-label">miles Class I rail</div>
+          <div class="stat-source">AAR 2023</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">1,095</div>
+          <div class="stat-label">navigable waterway mi</div>
+          <div class="stat-source">IDOT</div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-value">6</div>
+          <div class="stat-label">Class I carriers</div>
+          <div class="stat-source">UP, BNSF, CN, NS, CSX, CPKC</div>
+        </div>
+      </div>
+
+      <details class="expandable-section">
+        <summary>Rail Access by Nuclear Site</summary>
+        <div class="expandable-content">
+          <p>All six operating nuclear plants have regional rail access. The Dresden/Morris complex has been specifically evaluated by DOE for multimodal spent fuel transport, with CN Railroad transload locations assessed during a May 2022 in-person site evaluation.</p>
+          <p class="source-cite">Source: PNNL-30429, "Nuclear Power Plant Infrastructure Evaluations for Removal of Spent Nuclear Fuel" (2024 update); WM2023-23024, Dresden/Morris Site Infrastructure Evaluations.</p>
+        </div>
+      </details>
+
+      <details class="expandable-section">
+        <summary>Waterway Access</summary>
+        <div class="expandable-content">
+          <p><strong>Quad Cities</strong> sits directly on the Mississippi River (USACE-maintained navigable waterway). Barges were used during original construction in 1967. This is the strongest barge-access nuclear site in the state.</p>
+          <p><strong>Dresden/Morris</strong> sits at the head of the Illinois River. In June 2020, DOE/PNNL conducted the first-ever drone survey of a commercial nuclear site, mapping the Dresden Lock and Dam and nearby barge area to evaluate waterway viability for spent fuel transport.</p>
+          <p>The Illinois waterway system connects to both the Gulf of Mexico (via Mississippi) and the Atlantic (via Great Lakes/St. Lawrence Seaway).</p>
+          <p class="source-cite">Source: WM2021-21004, Morris ISFSI Virtual Site Evaluation; IDOT Waterway System; USACE Navigable Waterways.</p>
+        </div>
+      </details>
+
+      <details class="expandable-section">
+        <summary>Strategic Highway Network (STRAHNET)</summary>
+        <div class="expandable-content">
+          <p>The DOD's Strategic Highway Network designates routes rated for heavy military and industrial equipment transport. Illinois has extensive STRAHNET coverage, including I-55, I-57, I-80, I-88, and I-90/94 — corridors that connect nuclear sites to Chicago's intermodal hub and to neighboring states.</p>
+          <p>IDOT issues oversize/overweight permits under 625 ILCS 5/15-301 for heavy haul transport.</p>
+          <p class="source-cite">Source: FHWA STRAHNET dataset, IDOT ITAP permits</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- Transmission & Grid -->
+    <div class="narrative-section">
+      <div class="section-label accent-blue">Transmission &amp; Grid</div>
+
+      <p>
+        Illinois's 345kV+ transmission network connects nuclear plants to load centers across two regional transmission organizations: PJM (ComEd territory, northern IL) and MISO (Ameren territory, central/southern IL).
+      </p>
+
+      <div class="stat-row">
+        <div class="stat-card">
+          <div class="stat-value">415</div>
+          <div class="stat-label">345kV+ line segments</div>
+          <div class="stat-source">HIFLD</div>
+        </div>
+      </div>
+
+      <details class="expandable-section">
+        <summary>Transmission Owners</summary>
+        <div class="expandable-content">
+          <p><strong>Commonwealth Edison (ComEd):</strong> 111 segments. Serves northern Illinois including Braidwood, Byron, Dresden, LaSalle, and Quad Cities service areas.</p>
+          <p><strong>Ameren Illinois:</strong> 92 segments. Serves central and southern Illinois including Clinton service area.</p>
+          <p class="source-cite">Source: HIFLD Electric Power Transmission Lines. Accessed <span class="access-date">2026-03-27</span>.</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- Spent Fuel & Waste -->
+    <div class="narrative-section">
+      <div class="section-label accent-yellow">Spent Fuel &amp; Waste</div>
+
+      <p>
+        The NLIC RFI explicitly ties new nuclear development to waste disposition. Illinois already manages significant spent fuel inventories — including the only commercial away-from-reactor storage facility in the country.
+      </p>
+
+      <details class="expandable-section">
+        <summary>Morris Operation — GE-Hitachi ISFSI</summary>
+        <div class="expandable-content">
+          <p>The Morris facility (NRC Docket 72-0001) stores 772 metric tons of spent fuel from five reactor sites: Dresden, Cooper, Connecticut Yankee, Monticello, and San Onofre. It is the only licensed commercial away-from-reactor wet spent fuel storage facility in the United States.</p>
+          <p>License renewed to 2042. Operated by GE-Hitachi Nuclear Energy Americas, LLC.</p>
+          <p class="source-cite">Source: Federal Register 2022-24993, ANS Nuclear Newswire</p>
+        </div>
+      </details>
+
+      <details class="expandable-section">
+        <summary>On-Site Dry Cask Storage</summary>
+        <div class="expandable-content">
+          <p>All six operating plants maintain ISFSI facilities for on-site dry cask storage of spent fuel. The decommissioned Zion site also retains an ISFSI (Docket 72-1037) with spent fuel remaining after the 2023 site release.</p>
+          <p class="source-cite">Source: NRC ISFSI Licensing Database</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- Sources -->
+    <div class="narrative-section">
+      <div class="section-label">Sources</div>
+      <p style="font-size: 10px; line-height: 1.5; color: var(--color-warm-gray);">
+        NRC Reactor Info Finder &bull; WNA Reactor Database &bull; EIA-860/923 &bull;
+        HIFLD Electric Power Transmission Lines &bull; USDOT BTS North American Rail Network &bull;
+        USACE Waterway Network &bull; FHWA STRAHNET &bull; DOE NLIC RFI (Jan 2026) &bull;
+        AAR Freight Rail Data &bull; IDOT &bull; Federal Register
+      </p>
+      <p style="font-size: 10px; margin-top: var(--space-xs);">
+        <a href="sources.html" style="color: var(--color-blue);">Full methodology and source documentation →</a>
+      </p>
+    </div>
+
+  </aside>
+
+  <!-- Map -->
+  <main class="app-map">
+    <div id="map" role="application" aria-label="Interactive map of Illinois nuclear infrastructure"></div>
+
+    <!-- Legend -->
+    <div class="map-legend" id="map-legend">
+      <div class="legend-section">
+        <div class="legend-title">Nuclear Sites</div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-circle" style="background: var(--color-red);"></span>
+          Operating reactor
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-circle" style="background: var(--color-gray-50);"></span>
+          Decommissioned
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-diamond" style="background: var(--color-yellow); border: 1px solid var(--color-ink);"></span>
+          Spent fuel storage
+        </div>
+        <div class="legend-item">
+          <span class="legend-swatch swatch-circle" style="background: var(--color-blue);"></span>
+          National lab / university
+        </div>
+      </div>
+      <div class="legend-section" id="legend-transport" style="display: none;">
+        <div class="legend-title">Transport &amp; Grid</div>
+        <div class="legend-item" data-legend="transmission" style="display: none;">
+          <span class="legend-swatch swatch-line" style="background: var(--color-blue);"></span>
+          345kV+ transmission
+        </div>
+        <div class="legend-item" data-legend="railroads" style="display: none;">
+          <span class="legend-swatch swatch-line" style="background: var(--color-gray-70);"></span>
+          Class I railroad
+        </div>
+        <div class="legend-item" data-legend="waterways" style="display: none;">
+          <span class="legend-swatch swatch-line" style="background: var(--color-blue); opacity: 0.5;"></span>
+          Navigable waterway
+        </div>
+        <div class="legend-item" data-legend="strahnet" style="display: none;">
+          <span class="legend-swatch swatch-line" style="background: var(--color-red); opacity: 0.5;"></span>
+          STRAHNET highway
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Detail Panel -->
+  <aside class="app-detail" id="detail-panel" role="complementary" aria-label="Feature detail panel">
+    <div class="detail-header">
+      <button class="detail-close" id="detail-close" aria-label="Close detail panel">&times;</button>
+      <h2 id="detail-title"></h2>
+      <div class="detail-type" id="detail-type"></div>
+    </div>
+    <div id="detail-content"></div>
+  </aside>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <span>Sources: NRC &bull; EIA &bull; HIFLD &bull; USDOT BTS &bull; USACE &bull; FHWA &bull; DOE | <a href="sources.html">sources.html</a></span>
+    <span id="footer-date">Last updated: March 2026</span>
+  </footer>
+
+</div>
+
+<script src="js/map.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/detail-panel.js"></script>
+<script src="js/app.js"></script>
+<script src="js/mobile.js"></script>
+
+</body>
+</html>

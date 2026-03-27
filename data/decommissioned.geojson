@@ -1,0 +1,83 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "source": "NRC Decommissioning Status Reports, World Nuclear Association Reactor Database",
+    "access_date": "2026-03-27",
+    "jurisdiction": "Illinois",
+    "known_gaps": [],
+    "notes": "Dresden 1 is co-located with operating Dresden 2&3. Zion site released for unrestricted use 2023; ISFSI remains."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zion Nuclear Power Station",
+        "short_name": "Zion",
+        "operator_original": "Commonwealth Edison",
+        "decommissioning_contractor": "ZionSolutions (EnergySolutions)",
+        "isfsi_operator": "Constellation Energy Generation, LLC",
+        "county": "Lake",
+        "units": [
+          {
+            "name": "Zion 1",
+            "type": "PWR",
+            "design": "Westinghouse 4-loop",
+            "net_capacity_mw": 1040,
+            "commercial_operation": "1973-12-31",
+            "shutdown_date": "1998-02-13",
+            "nrc_docket": "05000295"
+          },
+          {
+            "name": "Zion 2",
+            "type": "PWR",
+            "design": "Westinghouse 4-loop",
+            "net_capacity_mw": 1040,
+            "commercial_operation": "1974-09-17",
+            "shutdown_date": "1998-02-13",
+            "nrc_docket": "05000304"
+          }
+        ],
+        "total_capacity_mw": 2080,
+        "unit_count": 2,
+        "status": "Decommissioned",
+        "isfsi": true,
+        "isfsi_docket": "72-1037",
+        "site_released": "2023",
+        "notes": "Site released for unrestricted use by NRC in 2023. ISFSI with spent fuel remains on site. Potential NLIC brownfield candidate."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-87.8030, 42.4464]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dresden Unit 1",
+        "short_name": "Dresden 1",
+        "operator_original": "Commonwealth Edison",
+        "county": "Grundy",
+        "units": [
+          {
+            "name": "Dresden 1",
+            "type": "BWR",
+            "design": "GE dual-cycle",
+            "net_capacity_mw": 197,
+            "commercial_operation": "1960-07-04",
+            "shutdown_date": "1978-10-31",
+            "nrc_docket": "05000010"
+          }
+        ],
+        "total_capacity_mw": 197,
+        "unit_count": 1,
+        "status": "SAFSTOR",
+        "isfsi": false,
+        "notes": "First privately financed nuclear plant in the US. Co-located with operating Dresden 2&3. In SAFSTOR pending decommissioning with Units 2&3."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.2749, 41.3910]
+      }
+    }
+  ]
+}

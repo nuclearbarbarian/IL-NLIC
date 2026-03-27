@@ -1,0 +1,233 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "source": "NRC Reactor Info Finder, World Nuclear Association Reactor Database",
+    "access_date": "2026-03-27",
+    "jurisdiction": "Illinois",
+    "known_gaps": ["Uprate history not included", "Capacity factors not included"],
+    "notes": "Net capacity from WNA (post-uprate). License dates current as of March 2026. Coordinates represent plant site centroid."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Braidwood Generating Station",
+        "short_name": "Braidwood",
+        "operator": "Constellation Energy Generation, LLC",
+        "county": "Will",
+        "units": [
+          {
+            "name": "Braidwood 1",
+            "type": "PWR",
+            "design": "Westinghouse 4-loop",
+            "net_capacity_mw": 1194,
+            "commercial_operation": "1988-07-29",
+            "license_expiration": "2046-10-17",
+            "nrc_docket": "05000456"
+          },
+          {
+            "name": "Braidwood 2",
+            "type": "PWR",
+            "design": "Westinghouse 4-loop",
+            "net_capacity_mw": 1160,
+            "commercial_operation": "1988-10-17",
+            "license_expiration": "2047-12-18",
+            "nrc_docket": "05000457"
+          }
+        ],
+        "total_capacity_mw": 2354,
+        "unit_count": 2,
+        "status": "Operating",
+        "isfsi": true,
+        "rto": "PJM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.2292, 41.2437]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Byron Generating Station",
+        "short_name": "Byron",
+        "operator": "Constellation Energy Generation, LLC",
+        "county": "Ogle",
+        "units": [
+          {
+            "name": "Byron 1",
+            "type": "PWR",
+            "design": "Westinghouse 4-loop",
+            "net_capacity_mw": 1164,
+            "commercial_operation": "1985-09-16",
+            "license_expiration": "2044-10-31",
+            "nrc_docket": "05000454"
+          },
+          {
+            "name": "Byron 2",
+            "type": "PWR",
+            "design": "Westinghouse 4-loop",
+            "net_capacity_mw": 1136,
+            "commercial_operation": "1987-08-02",
+            "license_expiration": "2046-11-06",
+            "nrc_docket": "05000455"
+          }
+        ],
+        "total_capacity_mw": 2300,
+        "unit_count": 2,
+        "status": "Operating",
+        "isfsi": true,
+        "rto": "PJM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-89.2822, 42.0742]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Clinton Power Station",
+        "short_name": "Clinton",
+        "operator": "Constellation Energy Generation, LLC",
+        "county": "DeWitt",
+        "units": [
+          {
+            "name": "Clinton 1",
+            "type": "BWR",
+            "design": "GE Type 6, Mark III",
+            "net_capacity_mw": 1062,
+            "commercial_operation": "1987-11-24",
+            "license_expiration": "2047-04-17",
+            "nrc_docket": "05000461"
+          }
+        ],
+        "total_capacity_mw": 1062,
+        "unit_count": 1,
+        "status": "Operating",
+        "isfsi": true,
+        "rto": "MISO"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.8363, 40.1740]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dresden Generating Station",
+        "short_name": "Dresden",
+        "operator": "Constellation Energy Generation, LLC",
+        "county": "Grundy",
+        "units": [
+          {
+            "name": "Dresden 2",
+            "type": "BWR",
+            "design": "GE Type 3, Mark I",
+            "net_capacity_mw": 894,
+            "commercial_operation": "1970-06-09",
+            "license_expiration": "2049-12-22",
+            "nrc_docket": "05000237"
+          },
+          {
+            "name": "Dresden 3",
+            "type": "BWR",
+            "design": "GE Type 3, Mark I",
+            "net_capacity_mw": 879,
+            "commercial_operation": "1971-11-16",
+            "license_expiration": "2051-01-12",
+            "nrc_docket": "05000249"
+          }
+        ],
+        "total_capacity_mw": 1773,
+        "unit_count": 2,
+        "status": "Operating",
+        "isfsi": true,
+        "rto": "PJM",
+        "notes": "Adjacent to Morris ISFSI and Illinois River. DOE has evaluated multimodal transport (rail, barge, heavy-haul) at this site."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.2749, 41.3910]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "LaSalle County Generating Station",
+        "short_name": "LaSalle",
+        "operator": "Constellation Energy Generation, LLC",
+        "county": "LaSalle",
+        "units": [
+          {
+            "name": "LaSalle 1",
+            "type": "BWR",
+            "design": "GE Type 5, Mark II",
+            "net_capacity_mw": 1137,
+            "commercial_operation": "1984-01-01",
+            "license_expiration": "2042-04-17",
+            "nrc_docket": "05000373"
+          },
+          {
+            "name": "LaSalle 2",
+            "type": "BWR",
+            "design": "GE Type 5, Mark II",
+            "net_capacity_mw": 1140,
+            "commercial_operation": "1984-10-19",
+            "license_expiration": "2043-12-16",
+            "nrc_docket": "05000374"
+          }
+        ],
+        "total_capacity_mw": 2277,
+        "unit_count": 2,
+        "status": "Operating",
+        "isfsi": true,
+        "rto": "PJM"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.6673, 41.2448]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Quad Cities Generating Station",
+        "short_name": "Quad Cities",
+        "operator": "Constellation Energy Generation, LLC",
+        "county": "Rock Island",
+        "units": [
+          {
+            "name": "Quad Cities 1",
+            "type": "BWR",
+            "design": "GE Type 3, Mark I",
+            "net_capacity_mw": 908,
+            "commercial_operation": "1973-02-18",
+            "license_expiration": "2032-12-14",
+            "nrc_docket": "05000254"
+          },
+          {
+            "name": "Quad Cities 2",
+            "type": "BWR",
+            "design": "GE Type 3, Mark I",
+            "net_capacity_mw": 911,
+            "commercial_operation": "1973-03-10",
+            "license_expiration": "2032-12-14",
+            "nrc_docket": "05000265"
+          }
+        ],
+        "total_capacity_mw": 1819,
+        "unit_count": 2,
+        "status": "Operating",
+        "isfsi": true,
+        "rto": "PJM",
+        "notes": "Direct Mississippi River frontage. Barges used during original construction (1967). Strongest barge access among IL nuclear sites."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-90.3089, 41.7255]
+      }
+    }
+  ]
+}

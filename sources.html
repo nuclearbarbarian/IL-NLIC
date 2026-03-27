@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sources & Methodology — Illinois Nuclear Infrastructure</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Source+Serif+4:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    body {
+      background: var(--color-paper);
+      color: var(--color-ink);
+      font-family: var(--font-serif);
+      margin: 0;
+      padding: 0;
+    }
+    .sources-page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+    .back-link {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--color-ink);
+      text-decoration: none;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    .sources-page h1 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      margin: 0 0 0.25rem;
+    }
+    .sources-page .subtitle {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1rem;
+      margin: 0 0 1.5rem;
+      color: var(--color-ink);
+    }
+    .sources-page h2 {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      margin: 2rem 0 0.75rem;
+    }
+    .sources-page h3 {
+      font-family: var(--font-serif);
+      font-size: 1.1rem;
+      margin: 1.5rem 0 0.5rem;
+    }
+    .sources-page hr {
+      border: none;
+      border-top: 1px solid var(--color-newsprint);
+      margin: 2rem 0;
+    }
+    .sources-page p,
+    .sources-page li {
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+    .sources-page ul {
+      padding-left: 1.25rem;
+      margin: 0.5rem 0;
+    }
+    .sources-page li {
+      margin-bottom: 0.4rem;
+    }
+    .sources-page ol {
+      padding-left: 1.25rem;
+      margin: 0.5rem 0;
+    }
+    .sources-page ol li {
+      margin-bottom: 0.6rem;
+    }
+    .sources-page code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--color-newsprint);
+      padding: 0.1em 0.35em;
+      border-radius: 2px;
+    }
+    .sources-page a {
+      color: var(--color-ink);
+    }
+  </style>
+</head>
+<body>
+
+<div class="sources-page">
+
+  <a href="index.html" class="back-link">&larr; Back to map</a>
+
+  <h1>Sources &amp; Methodology</h1>
+  <p class="subtitle">Illinois Nuclear Infrastructure Map &mdash; March 2026</p>
+
+  <hr>
+
+  <h2>Nuclear Generation Data</h2>
+
+  <h3>Operating Reactors</h3>
+  <ul>
+    <li><strong>Source:</strong> NRC Reactor Information Finder + World Nuclear Association Reactor Database</li>
+    <li><strong>Access date:</strong> 2026-03-27</li>
+    <li><strong>Scope:</strong> All 6 operating nuclear generating stations in Illinois (11 units)</li>
+    <li><strong>Fields:</strong> Location (lat/lng), unit count, reactor type, design, net capacity (MWe), commercial operation date, license expiration date, NRC docket number, ISFSI status, RTO membership</li>
+    <li><strong>Net capacity:</strong> Post-uprate values from WNA. May differ slightly from NRC thermal ratings.</li>
+    <li><strong>License dates:</strong> Current as of March 2026, including subsequent renewals granted December 2025 for Dresden 2&amp;3 and Clinton 1.</li>
+    <li><strong>Known gaps:</strong> Uprate history not included. Capacity factors not included.</li>
+  </ul>
+
+  <h3>Decommissioned Sites</h3>
+  <ul>
+    <li><strong>Source:</strong> NRC Decommissioning Status Reports, WNA Reactor Database</li>
+    <li><strong>Access date:</strong> 2026-03-27</li>
+    <li><strong>Scope:</strong> Zion Nuclear Power Station (2 units), Dresden Unit 1</li>
+    <li><strong>Zion status:</strong> Site released for unrestricted use by NRC in 2023. ISFSI remains with spent fuel on site.</li>
+    <li><strong>Dresden 1 status:</strong> SAFSTOR, pending decommissioning with Units 2&amp;3. First privately financed nuclear plant in the US (1960).</li>
+  </ul>
+
+  <h3>Independent Spent Fuel Storage Installations (ISFSI)</h3>
+  <ul>
+    <li><strong>Source:</strong> NRC ISFSI Licensing Database, Federal Register 2022-24993</li>
+    <li><strong>Access date:</strong> 2026-03-27</li>
+    <li><strong>Morris Operation:</strong> GE-Hitachi Nuclear Energy Americas, LLC. NRC License SNM-2500 (Docket 72-0001). 772 metric tons stored. License renewed to 2042. Only licensed commercial away-from-reactor wet spent fuel storage facility in the US.</li>
+    <li><strong>Zion ISFSI:</strong> Docket 72-1037. Operated by Constellation Energy Generation, LLC.</li>
+    <li><strong>Note:</strong> Plant-site ISFSIs at all 6 operating stations are confirmed but exact cask counts and tonnage are not included.</li>
+  </ul>
+
+  <h3>Generation Statistics</h3>
+  <ul>
+    <li><strong>Source:</strong> EIA-923, EIA Illinois Electricity Profile</li>
+    <li><strong>Figure:</strong> ~99 TWh nuclear generation in 2024, representing ~53% of Illinois electricity</li>
+    <li><strong>Note:</strong> 2024 figure from EIA Electricity Data Browser and state profiles. Figures from multiple secondary sources (Statista, EIA state analysis).</li>
+  </ul>
+
+  <hr>
+
+  <h2>National Labs &amp; Research</h2>
+
+  <ul>
+    <li><strong>Source:</strong> DOE Office of Science, University of Illinois</li>
+    <li><strong>Access date:</strong> 2026-03-27</li>
+    <li><strong>Scope:</strong> Argonne National Laboratory (Lemont, IL), Fermi National Accelerator Laboratory (Batavia, IL), University of Illinois Urbana-Champaign</li>
+    <li><strong>Coordinates:</strong> Campus/complex centroids from Mapcarta and latitude.to, cross-referenced with DOE facility descriptions.</li>
+  </ul>
+
+  <hr>
+
+  <h2>Transmission Data</h2>
+
+  <h3>345kV+ Transmission Lines</h3>
+  <ul>
+    <li><strong>Source:</strong> Homeland Infrastructure Foundation-Level Data (HIFLD), via ArcGIS FeatureServer</li>
+    <li><strong>Service URL:</strong> <code>https://services2.arcgis.com/FiaPA4ga0iQKduv3/arcgis/rest/services/US_Electric_Power_Transmission_Lines/FeatureServer</code></li>
+    <li><strong>Access date:</strong> 2026-03-27</li>
+    <li><strong>Query:</strong> <code>VOLTAGE &gt;= 345</code>, spatial filter on Illinois bounding box (-91.5 to -87.5 lng, 36.97 to 42.51 lat)</li>
+    <li><strong>Result:</strong> 415 line features with geometry (~24,400 coordinates)</li>
+    <li><strong>Fields:</strong> Owner, voltage, voltage class, substation endpoints, status</li>
+    <li><strong>Key owners:</strong> Commonwealth Edison (111 segments), Ameren Illinois (92), Union Electric (46), MidAmerican Energy (15)</li>
+    <li><strong>Known gaps:</strong> Substation endpoint names not populated for all features.</li>
+    <li><strong>Owner inference (105 segments):</strong> HIFLD attributed 105 of 415 segments as "NOT AVAILABLE" for owner. We resolved all 105 using two methods: (1) <strong>Substation matching</strong> (75 segments): other segments sharing the same named substation endpoints had known owners &mdash; the most common owner at each substation was assigned. (2) <strong>Geographic proximity</strong> (30 segments): for segments with only UNKNOWN/TAP substation names, the 5 nearest segments with known owners were used to vote on likely owner. All inferred owners are tagged with <code>INFERRED_OWNER</code> and <code>OWNER_SOURCE</code> properties to distinguish from HIFLD-sourced attributions. Breakdown: Commonwealth Edison 70, Ameren Illinois 13, NIPSCO 7, Duke Energy Indiana 6, MidAmerican Energy 3, Union Electric 3, others 3.</li>
+  </ul>
+
+  <hr>
+
+  <h2>Transport Corridor Data</h2>
+
+  <h3>Class I Railroads</h3>
+  <ul>
+    <li><strong>Source:</strong> USDOT Bureau of Transportation Statistics (BTS), North American Rail Network Lines &mdash; Class I Freight Railroads View</li>
+    <li><strong>Service URL:</strong> <code>https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_North_American_Rail_Network_Lines_Class_I_Railroads/FeatureServer</code></li>
+    <li><strong>Access date:</strong> 2026-03-27</li>
+    <li><strong>Query:</strong> <code>STATEAB = 'IL'</code></li>
+    <li><strong>Result:</strong> 4,516 segments with geometry</li>
+    <li><strong>Carriers represented:</strong> Union Pacific (1,040), Canadian National (947), BNSF (731), Norfolk Southern (641), CSX (347), CPKC (173), plus regional/terminal carriers</li>
+    <li><strong>Note:</strong> Includes all Class I-owned track in Illinois, including yards and sidings.</li>
+  </ul>
+
+  <h3>Navigable Waterways</h3>
+  <ul>
+    <li><strong>Source:</strong> U.S. Army Corps of Engineers (USACE) Waterway Network, via Esri Federal Data ArcGIS service</li>
+    <li><strong>Service URL:</strong> <code>https://services7.arcgis.com/n1YM8pTrFmm7L4hs/ArcGIS/rest/services/Waterway_Networks/FeatureServer/1</code></li>
+    <li><strong>Access date:</strong> 2026-03-27</li>
+    <li><strong>Query:</strong> Spatial filter on Illinois bounding box</li>
+    <li><strong>Result:</strong> 130 waterway segments</li>
+    <li><strong>Rivers represented:</strong> Mississippi (43 segments), Ohio (20), Illinois (18), Lake Michigan (13), Chicago River (6), Tennessee (6), Cumberland (6), Chicago Ship Canal (4), Calumet-Sag Channel (3), Kaskaskia (3), others</li>
+    <li><strong>Note:</strong> Dataset represents navigable waterways as defined by USACE. Not all segments are rated for spent fuel cask barge transport. The Dresden/Morris and Quad Cities barge evaluations are site-specific (see DOE/IAEA Near-Site Transportation Infrastructure studies).</li>
+  </ul>
+
+  <h3>Strategic Highway Network (STRAHNET)</h3>
+  <ul>
+    <li><strong>Source:</strong> Federal Highway Administration (FHWA), via USDOT BTS National Transportation Atlas Database</li>
+    <li><strong>Service URL:</strong> <code>https://services.arcgis.com/xOi1kZaI0eWDREZv/arcgis/rest/services/NTAD_Strategic_Highway_Network/FeatureServer</code></li>
+    <li><strong>Access date:</strong> 2026-03-27</li>
+    <li><strong>Query:</strong> <code>STFIPS = 17</code> (Illinois FIPS code)</li>
+    <li><strong>Result:</strong> 1,719 segments</li>
+    <li><strong>Major routes:</strong> I-55 (284 segments), I-57 (191), I-90 (183), I-290 (146), I-74 (122), I-80 (114), I-94 (117), I-72 (79), I-39 (73), I-88 (68), I-64 (53)</li>
+    <li><strong>Note:</strong> STRAHNET is the DOD's designated network of highways rated for strategic defense transport. Characterizing these as "nuclear transport capable" is our analytical framing; STRAHNET's official purpose is defense logistics. IDOT issues oversize/overweight permits under 625 ILCS 5/15-301 for heavy haul on these and other routes.</li>
+  </ul>
+
+  <hr>
+
+  <h2>DOE NLIC RFI</h2>
+
+  <ul>
+    <li><strong>Source:</strong> U.S. Department of Energy, "Nuclear Lifecycle Innovation Campuses" Request for Information</li>
+    <li><strong>Published:</strong> January 28, 2026</li>
+    <li><strong>Response deadline:</strong> April 1, 2026</li>
+    <li><strong>SAM.gov listing:</strong> Solicitation available at sam.gov</li>
+    <li><strong>Key coverage:</strong>
+      <ul>
+        <li>ANS Nuclear Newswire, "DOE lays out fuel cycle goals in RFI to states" (January 2026)</li>
+        <li>Neutron Bytes, "DOE seeks homes for the elements of the nuclear fuel cycle" (January 31, 2026)</li>
+        <li>DOE official announcement at energy.gov</li>
+      </ul>
+    </li>
+  </ul>
+
+  <hr>
+
+  <h2>Transport Capability Statistics (Sidebar)</h2>
+
+  <ul>
+    <li><strong>6,769 miles Class I rail:</strong> Association of American Railroads (AAR), "Freight Rail in Illinois" (2023 data)</li>
+    <li><strong>1,095 navigable waterway miles:</strong> Illinois Department of Transportation, Waterway System overview</li>
+    <li><strong>6 Class I carriers:</strong> AAR. Union Pacific, BNSF, Canadian National, Norfolk Southern, CSX, CPKC.</li>
+    <li><strong>#2 state rail network:</strong> AAR state comparison (Texas is #1)</li>
+  </ul>
+
+  <hr>
+
+  <h2>DOE/PNNL Nuclear Power Plant Transportation Infrastructure Evaluations</h2>
+
+  <h3>Program Overview</h3>
+  <ul>
+    <li><strong>Program:</strong> Nuclear Power Plant Infrastructure Evaluations for Removal of Spent Nuclear Fuel</li>
+    <li><strong>Lead:</strong> Pacific Northwest National Laboratory (PNNL), for DOE Office of Nuclear Energy, Office of Integrated Waste Management</li>
+    <li><strong>Report:</strong> PNNL-30429 (April 2021; updated February 2024)</li>
+    <li><strong>DOI:</strong> <a href="https://doi.org/10.2172/1798213">https://doi.org/10.2172/1798213</a></li>
+    <li><strong>Authors:</strong> Maheras, S.J.; Rodman, L.S.; Best, R.E.; Levin, A.; Ross, S.B.; Massaro, L.M.; Jensen, P.J.</li>
+    <li><strong>Scope:</strong> Infrastructure evaluations of 20 NPP sites including Dresden and Morris</li>
+  </ul>
+
+  <h3>Dresden/Morris In-Person Site Evaluation (May 2022)</h3>
+  <ul>
+    <li><strong>Paper:</strong> WM2023-23024, "Dresden Nuclear Power Plant and Morris ISFSI Site Infrastructure Evaluations"</li>
+    <li><strong>Conference:</strong> 49th Annual Waste Management Conference (WM2023), Phoenix, AZ, Feb 26&ndash;Mar 2, 2023</li>
+    <li><strong>Authors:</strong> Maheras (PNNL), Hobbs (Constellation), Walker (Constellation), Partney (GE-Hitachi), Bickford (DOE), Peoples (INL), Arvidson (CSG Midwest), Moore (FRA)</li>
+    <li><strong>INIS:</strong> <a href="https://inis.iaea.org/records/y7p4r-wx930">https://inis.iaea.org/records/y7p4r-wx930</a></li>
+    <li><strong>Key findings cited:</strong> CN Railroad transload assessment, multimodal transport evaluation</li>
+  </ul>
+
+  <h3>Morris Virtual Site Evaluation (June 2020)</h3>
+  <ul>
+    <li><strong>Paper:</strong> WM2021-21004, "GE-Hitachi Morris Operation ISFSI Virtual Site Evaluation"</li>
+    <li><strong>Conference:</strong> 47th Annual Waste Management Conference (WM2021), Phoenix, AZ, Mar 8&ndash;12, 2021</li>
+    <li><strong>Authors:</strong> Maheras, Rodman, Bickford, Janairo, Arvidson, McFadden, Hobbs</li>
+    <li><strong>INIS:</strong> <a href="https://inis.iaea.org/records/5egjm-99f78">https://inis.iaea.org/records/5egjm-99f78</a></li>
+    <li><strong>Key findings cited:</strong> First DOE drone survey of a commercial nuclear facility; Dresden Lock and Dam and barge area mapped for waterway viability</li>
+  </ul>
+
+  <h3>Historical Predecessor</h3>
+  <ul>
+    <li><strong>Report:</strong> OCRWM Near Site Transportation Infrastructure (NSTI) Study (January 1991)</li>
+    <li><strong>Author:</strong> Conroy, M.</li>
+    <li><strong>Publisher:</strong> DOE Office of Civilian Radioactive Waste Management</li>
+    <li><strong>OSTI:</strong> <a href="https://www.osti.gov/biblio/5602055">https://www.osti.gov/biblio/5602055</a></li>
+    <li><strong>Scope:</strong> All 76 reactor sites assessed for rail, road, and barge access</li>
+  </ul>
+
+  <h3>Note on "IAEA" Attribution</h3>
+  <p>IAEA's INIS database indexes the WM conference papers, but IAEA is not a co-author or co-sponsor. The correct attribution is DOE/PNNL.</p>
+
+  <hr>
+
+  <h2>Methodology Notes</h2>
+
+  <ol>
+    <li><strong>Coordinate precision:</strong> Plant and facility coordinates are to 4 decimal places (~11 meters), representing site centroids rather than individual reactor buildings.</li>
+    <li><strong>Spatial queries:</strong> All infrastructure layers were queried using the Illinois bounding box (-91.5 to -87.5 longitude, 36.97 to 42.51 latitude), which includes some features in neighboring states near the border.</li>
+    <li><strong>Data pipeline:</strong> Raw GeoJSON from government ArcGIS services &rarr; validated for feature count and geometry type &rarr; served directly (no transformation applied to geometry). Manual GeoJSON files (reactors, decommissioned, ISFSI, national labs) were hand-built from cited sources.</li>
+    <li><strong>No interpolation or estimation</strong> was applied to any data. All figures are from cited sources.</li>
+  </ol>
+
+</div>
+
+</body>
+</html>

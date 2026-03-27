@@ -1,0 +1,48 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "source": "NRC ISFSI Licensing, Federal Register",
+    "access_date": "2026-03-27",
+    "jurisdiction": "Illinois",
+    "known_gaps": ["Exact cask counts and tonnage not included for plant-site ISFSIs"],
+    "notes": "Morris Operation is the only licensed away-from-reactor wet spent fuel storage facility in the US. Plant-site ISFSIs are co-located with their respective generating stations."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Morris Operation (GE-Hitachi ISFSI)",
+        "short_name": "Morris ISFSI",
+        "operator": "GE-Hitachi Nuclear Energy Americas, LLC",
+        "type": "Away-from-reactor, wet storage",
+        "nrc_license": "SNM-2500",
+        "nrc_docket": "72-0001",
+        "stored_tonnage_mt": 772,
+        "source_plants": ["Dresden", "Cooper", "Connecticut Yankee", "Monticello", "San Onofre"],
+        "license_expiration": "2042",
+        "status": "Operating",
+        "notes": "Only licensed commercial away-from-reactor spent fuel storage facility in the US. Stores 772 metric tons of spent fuel. License renewed 2022."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.2770, 41.3811]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zion ISFSI",
+        "short_name": "Zion ISFSI",
+        "operator": "Constellation Energy Generation, LLC",
+        "type": "On-site dry cask storage",
+        "nrc_docket": "72-1037",
+        "status": "Operating (fuel storage only)",
+        "notes": "Spent fuel remains on site after plant decommissioning completed 2023."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-87.8030, 42.4464]
+      }
+    }
+  ]
+}

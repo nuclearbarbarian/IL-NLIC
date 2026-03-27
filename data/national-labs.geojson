@@ -1,0 +1,62 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "source": "DOE Office of Science, University of Illinois",
+    "access_date": "2026-03-27",
+    "jurisdiction": "Illinois",
+    "known_gaps": [],
+    "notes": "Coordinates represent main campus/complex centroids."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Argonne National Laboratory",
+        "short_name": "Argonne",
+        "type": "DOE National Laboratory",
+        "operator": "UChicago Argonne, LLC",
+        "city": "Lemont",
+        "county": "DuPage",
+        "nlic_relevance": "Advanced reactor design, nuclear fuel cycle R&D, materials science, nuclear engineering workforce. Home to the Advanced Photon Source and multiple nuclear research programs.",
+        "established": 1946
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-87.9820, 41.7092]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Fermi National Accelerator Laboratory",
+        "short_name": "Fermilab",
+        "type": "DOE National Laboratory",
+        "operator": "Fermi Research Alliance, LLC",
+        "city": "Batavia",
+        "county": "DuPage/Kane",
+        "nlic_relevance": "Materials science, superconducting technology, particle physics expertise applicable to advanced nuclear systems. Major DOE research workforce.",
+        "established": 1967
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.2437, 41.8422]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "University of Illinois Urbana-Champaign",
+        "short_name": "UIUC",
+        "type": "Research University",
+        "city": "Urbana-Champaign",
+        "county": "Champaign",
+        "nlic_relevance": "Department of Nuclear, Plasma, and Radiological Engineering. Nuclear workforce pipeline. Advanced reactor and fuel cycle research programs.",
+        "established": 1867
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.2282, 40.1106]
+      }
+    }
+  ]
+}
