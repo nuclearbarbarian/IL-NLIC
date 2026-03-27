@@ -73,7 +73,8 @@ var MapView = {
       },
       center: [-89.0, 40.0],
       zoom: 6.2,
-      maxBounds: [[-93.5, 35.5], [-84.5, 44.0]]
+      minZoom: 5.5,
+      maxBounds: [[-95.0, 34.5], [-83.0, 45.0]]
     });
 
     this.instance.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left');
