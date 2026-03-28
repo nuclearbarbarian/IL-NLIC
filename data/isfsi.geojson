@@ -1,11 +1,11 @@
 {
   "type": "FeatureCollection",
   "metadata": {
-    "source": "NRC ISFSI Licensing, Federal Register",
-    "access_date": "2026-03-27",
+    "source": "NRC ISFSI Licensing, Federal Register, NRC Exemption Documents",
+    "access_date": "2026-03-28",
     "jurisdiction": "Illinois",
-    "known_gaps": ["Exact cask counts and tonnage not included for plant-site ISFSIs"],
-    "notes": "Morris Operation is the only licensed away-from-reactor wet spent fuel storage facility in the US. Plant-site ISFSIs are co-located with their respective generating stations."
+    "known_gaps": ["Per-site cask counts and tonnage not published by NRC for general-license ISFSIs", "General-license ISFSIs have no independent license expiration — authorized under reactor Part 50 operating license"],
+    "notes": "Morris Operation is the only licensed commercial away-from-reactor wet spent fuel storage facility in the US. All six operating plant sites have general-license ISFSIs under 10 CFR 72 Subpart K. Plant-site ISFSI coordinates are offset slightly from reactor centroids for map legibility."
   },
   "features": [
     {
@@ -42,6 +42,114 @@
       "geometry": {
         "type": "Point",
         "coordinates": [-87.8030, 42.4464]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Braidwood ISFSI",
+        "short_name": "Braidwood ISFSI",
+        "operator": "Constellation Energy Generation, LLC",
+        "type": "On-site dry cask storage (general license)",
+        "nrc_docket": "72-73",
+        "cask_system": "Holtec HI-STORM 100, MPC-32 (PWR, 32 assemblies/canister)",
+        "reactor_dockets": "50-456, 50-457",
+        "status": "Operating",
+        "notes": "Co-located with Braidwood Generating Station. General license under 10 CFR 72 Subpart K. Per-site cask count and tonnage not published by NRC."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.2142, 41.2437]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Byron ISFSI",
+        "short_name": "Byron ISFSI",
+        "operator": "Constellation Energy Generation, LLC",
+        "type": "On-site dry cask storage (general license)",
+        "nrc_docket": "72-68",
+        "cask_system": "Holtec HI-STORM 100, MPC-32 (PWR, 32 assemblies/canister)",
+        "reactor_dockets": "50-454, 50-455",
+        "status": "Operating",
+        "notes": "Co-located with Byron Generating Station. General license under 10 CFR 72 Subpart K. Per-site cask count and tonnage not published by NRC."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-89.2672, 42.0742]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Clinton ISFSI",
+        "short_name": "Clinton ISFSI",
+        "operator": "Constellation Energy Generation, LLC",
+        "type": "On-site dry cask storage (general license)",
+        "nrc_docket": "72-1046",
+        "cask_system": "Holtec HI-STORM, MPC-68 (BWR, 68 assemblies/canister)",
+        "reactor_dockets": "50-461",
+        "status": "Operating",
+        "notes": "Co-located with Clinton Power Station. General license under 10 CFR 72 Subpart K. Per-site cask count and tonnage not published by NRC."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.8213, 40.1740]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dresden ISFSI",
+        "short_name": "Dresden ISFSI",
+        "operator": "Constellation Energy Generation, LLC",
+        "type": "On-site dry cask storage (general license)",
+        "nrc_docket": "72-37",
+        "cask_system": "Holtec HI-STORM 100, MPC-68M (BWR, 68 assemblies/canister)",
+        "reactor_dockets": "50-10, 50-237, 50-249",
+        "status": "Operating",
+        "notes": "Co-located with Dresden Generating Station. Separate from the adjacent Morris Operation (72-0001) away-from-reactor facility. General license under 10 CFR 72 Subpart K. NRC exemption documents (2024) confirm multiple MPC-68M-CBS canisters loaded."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.2599, 41.3910]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "LaSalle ISFSI",
+        "short_name": "LaSalle ISFSI",
+        "operator": "Constellation Energy Generation, LLC",
+        "type": "On-site dry cask storage (general license)",
+        "nrc_docket": "72-70",
+        "cask_system": "Holtec HI-STORM 100, MPC-68M (BWR, 68 assemblies/canister)",
+        "reactor_dockets": "50-373, 50-374",
+        "status": "Operating",
+        "notes": "Co-located with LaSalle County Generating Station. General license under 10 CFR 72 Subpart K. Per-site cask count and tonnage not published by NRC."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.6523, 41.2448]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Quad Cities ISFSI",
+        "short_name": "Quad Cities ISFSI",
+        "operator": "Constellation Energy Generation, LLC",
+        "type": "On-site dry cask storage (general license)",
+        "nrc_docket": "72-53",
+        "cask_system": "Holtec HI-STORM 100, MPC-68M (BWR, 68 assemblies/canister)",
+        "reactor_dockets": "50-254, 50-265",
+        "status": "Operating",
+        "notes": "Co-located with Quad Cities Generating Station. General license under 10 CFR 72 Subpart K. Per-site cask count and tonnage not published by NRC."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-90.2939, 41.7255]
       }
     }
   ]
