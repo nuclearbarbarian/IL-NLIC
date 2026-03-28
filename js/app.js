@@ -6,11 +6,10 @@
 var App = {
 
   /* Data access date — update when refreshing data sources */
-  dataAccessDate: '2026-03-27',
+  dataAccessDate: '2026-03-28',
 
   init: function() {
     MapView.init();
-    Sidebar.init();
     this.wireLayerToggles();
     this.wireDetailClose();
     this.setFooterDate();
@@ -33,13 +32,16 @@ var App = {
 
   /* --- Wire checkbox toggles to map layers --- */
   wireLayerToggles: function() {
+    var transportKeys = ['transmission', 'railroads', 'waterways', 'strahnet'];
     var checkboxes = document.querySelectorAll('[data-layer]');
     for (var i = 0; i < checkboxes.length; i++) {
       (function(cb) {
         cb.addEventListener('change', function() {
           var layerKey = cb.getAttribute('data-layer');
           MapView.toggleLayer(layerKey, cb.checked);
-          App.updateLegend();
+          if (transportKeys.indexOf(layerKey) !== -1) {
+            App.updateLegend();
+          }
         });
       })(checkboxes[i]);
     }

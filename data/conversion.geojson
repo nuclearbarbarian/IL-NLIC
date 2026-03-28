@@ -1,0 +1,41 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "source": "NRC Facility Info Finder, ConverDyn, Solstice Advanced Materials press releases",
+    "access_date": "2026-03-28",
+    "jurisdiction": "Illinois",
+    "known_gaps": ["Exact current annual output not public"],
+    "notes": "Only commercial UF6 conversion facility in the United States. Ownership transferred from Honeywell to Solstice Advanced Materials (Nasdaq) October 2025."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Metropolis Works",
+        "short_name": "Metropolis Works",
+        "operator": "Solstice Advanced Materials (formerly Honeywell)",
+        "marketing": "ConverDyn",
+        "county": "Massac",
+        "type": "Uranium hexafluoride (UF\u2086) conversion",
+        "process": "Dry fluoride volatility",
+        "feed": "U\u2083O\u2088 (yellowcake)",
+        "product": "UF\u2086",
+        "licensed_capacity_mtu_yr": 15000,
+        "nrc_docket": "40-3392",
+        "nrc_license": "SUB-526",
+        "license_expiration": "2060-03-24",
+        "built": 1958,
+        "commercial_operation": 1968,
+        "most_recent_restart": "2023-07-06",
+        "status": "Operating",
+        "notes": "Only commercial UF6 conversion facility in the US. ~20% of global conversion capacity. $2B+ order backlog. Expanding output to >10,000 tonnes UF6 (~6,700 MTU) by 2026. Licensed capacity of 15,000 MTU/yr measures uranium feed; tonnes UF6 measures compound output including fluorine mass.",
+        "image": "images/metropolis-works.jpg",
+        "image_credit": "Photo: Ncollida1106, Wikimedia Commons, CC BY-SA 3.0"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.7570, 37.1718]
+      }
+    }
+  ]
+}

@@ -41,19 +41,37 @@ var MapView = {
   /* --- Initialize map --- */
   init: function() {
     var self = this;
+    var sourceFiles = this._sourceFiles;
+    var sourceNames = Object.keys(sourceFiles);
 
-    // Fetch Protomaps style, then create the map
-    fetch('https://api.protomaps.com/styles/v5/light/en.json?key=f1de8450ff699b1a')
-      .then(function(r) { return r.json(); })
-      .then(function(style) {
-        // Remove style-level center/zoom so our constructor values take precedence
-        delete style.center;
-        delete style.zoom;
-        self._createMap(style);
-      })
-      .catch(function(err) {
-        console.error('Failed to load map style:', err);
-      });
+    // Fetch Protomaps style + all GeoJSON data in parallel
+    var styleP = fetch('https://api.protomaps.com/styles/v5/light/en.json?key=f1de8450ff699b1a')
+      .then(function(r) { return r.json(); });
+
+    var dataPs = sourceNames.map(function(name) {
+      return fetch(sourceFiles[name], { cache: 'no-cache' })
+        .then(function(r) { return r.json(); })
+        .then(function(data) { return { name: name, data: data }; })
+        .catch(function() {
+          console.error('Failed to load:', sourceFiles[name]);
+          return { name: name, data: { type: 'FeatureCollection', features: [] } };
+        });
+    });
+
+    Promise.all([styleP].concat(dataPs)).then(function(results) {
+      var style = results[0];
+      delete style.center;
+      delete style.zoom;
+
+      var fetchedData = {};
+      for (var i = 1; i < results.length; i++) {
+        fetchedData[results[i].name] = results[i].data;
+      }
+      self._fetchedData = fetchedData;
+      self._createMap(style);
+    }).catch(function(err) {
+      console.error('Failed to initialize map:', err);
+    });
   },
 
   _createMap: function(style) {
@@ -91,14 +109,19 @@ var MapView = {
 
     this.instance.on('load', function() {
       var map = self.instance;
-      var sourceFiles = self._sourceFiles;
-      var names = Object.keys(sourceFiles);
+      var data = self._fetchedData;
+      var names = Object.keys(data);
       for (var i = 0; i < names.length; i++) {
-        map.addSource(names[i], { type: 'geojson', data: sourceFiles[names[i]] });
+        map.addSource(names[i], { type: 'geojson', data: data[names[i]] });
       }
 
       self.addAllLayers();
       self.setupInteractions();
+
+      // Populate sidebar table from pre-fetched data (avoids double-fetch)
+      if (typeof Sidebar !== 'undefined' && Sidebar.populateReactorTable) {
+        Sidebar.populateReactorTable();
+      }
 
       if (typeof App !== 'undefined' && App.onMapReady) {
         App.onMapReady();
@@ -113,6 +136,7 @@ var MapView = {
     'nlic-decommissioned':'data/decommissioned.geojson',
     'nlic-isfsi':         'data/isfsi.geojson',
     'nlic-labs':          'data/national-labs.geojson',
+    'nlic-conversion':    'data/conversion.geojson',
     'nlic-transmission':  'data/transmission/il_transmission_345kv.geojson',
     'nlic-railroads':     'data/transport/il_class1_railroads.geojson',
     'nlic-waterways':     'data/transport/il_waterways.geojson',
@@ -202,13 +226,26 @@ var MapView = {
 
     /* --- Point layers (top) --- */
 
-    // ISFSI diamonds
+    // Conversion facility
+    map.addLayer({
+      id: 'conversion-points',
+      type: 'circle',
+      source: 'nlic-conversion',
+      paint: {
+        'circle-radius': 8,
+        'circle-color': c.green,
+        'circle-stroke-color': c.ink,
+        'circle-stroke-width': 1.5
+      }
+    });
+
+    // ISFSI (smaller radius to distinguish from co-located reactor dots)
     map.addLayer({
       id: 'isfsi-points',
       type: 'circle',
       source: 'nlic-isfsi',
       paint: {
-        'circle-radius': 8,
+        'circle-radius': 6,
         'circle-color': c.yellow,
         'circle-stroke-color': c.ink,
         'circle-stroke-width': 1.5
@@ -292,8 +329,28 @@ var MapView = {
       }
     });
 
+    // Conversion labels
+    map.addLayer({
+      id: 'conversion-labels',
+      type: 'symbol',
+      source: 'nlic-conversion',
+      layout: {
+        'text-field': ['get', 'short_name'],
+        'text-font': ['Noto Sans Medium'],
+        'text-size': 10,
+        'text-offset': [0, -1.6],
+        'text-anchor': 'bottom'
+      },
+      paint: {
+        'text-color': c.green,
+        'text-halo-color': c.newsprint,
+        'text-halo-width': 2
+      }
+    });
+
     /* --- Build layer-id map for toggle --- */
     this.layers = {
+      conversion: ['conversion-points', 'conversion-labels'],
       reactors: ['reactors-points', 'reactors-labels'],
       decommissioned: ['decommissioned-points'],
       isfsi: ['isfsi-points'],
@@ -330,6 +387,11 @@ var MapView = {
     } else if (layerId === 'labs-points') {
       s += '<strong>' + name + '</strong><br>';
       s += '<span style="color: var(--color-warm-gray); font-size: 10px;">' + (props.type || '') + '</span>';
+
+    } else if (layerId === 'conversion-points') {
+      s += '<strong>' + name + '</strong><br>';
+      s += '<span style="color: var(--color-warm-gray); font-size: 10px;">' + (props.type || 'Fuel cycle facility') + '</span>';
+      s += '<br><span style="font-size: 10px;">' + escapeHTML(props.operator) + '</span>';
 
     } else if (layerId === 'transmission-lines') {
       var txOwner = props.OWNER;
@@ -389,7 +451,8 @@ var MapView = {
       'reactors-points',
       'decommissioned-points',
       'isfsi-points',
-      'labs-points'
+      'labs-points',
+      'conversion-points'
     ];
 
     var hoverPopup = new maplibregl.Popup({

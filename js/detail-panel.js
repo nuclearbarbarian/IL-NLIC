@@ -19,7 +19,8 @@ var DetailPanel = {
     'Dresden 1': { file: 'dresden-1.jpg', credit: 'U.S. AEC, Public Domain' },
     'Argonne': { file: 'argonne.jpg', credit: 'Argonne National Laboratory, CC BY-SA 2.0' },
     'Fermilab': { file: 'fermilab.jpg', credit: 'U.S. DOE, Public Domain' },
-    'UIUC': { file: 'uiuc.jpg', credit: 'Ken Lund / Wikimedia Commons, CC BY-SA 2.0' }
+    'UIUC': { file: 'uiuc.jpg', credit: 'Ken Lund / Wikimedia Commons, CC BY-SA 2.0' },
+    'Metropolis Works': { file: 'metropolis-works.jpg', credit: 'Ncollida1106 / Wikimedia Commons, CC BY-SA 3.0' }
   },
 
   /* --- Parse props and render content into the DOM (shared by desktop + mobile) --- */
@@ -52,6 +53,9 @@ var DetailPanel = {
         break;
       case 'labs':
         content = this.renderLab(props);
+        break;
+      case 'conversion':
+        content = this.renderConversion(props);
         break;
       default:
         content = '<p>' + JSON.stringify(props) + '</p>';
@@ -95,6 +99,8 @@ var DetailPanel = {
         return 'INDEPENDENT SPENT FUEL STORAGE INSTALLATION';
       case 'labs':
         return (props.type || '').toUpperCase();
+      case 'conversion':
+        return 'FUEL CYCLE FACILITY — ' + (props.county || '') + ' COUNTY, IL';
       default:
         return sourceType.toUpperCase();
     }
@@ -105,12 +111,10 @@ var DetailPanel = {
     var html = this.renderPhoto(props.short_name);
 
     // Summary stats
-    html += '<div class="stat-row">';
-    html += '<div class="stat-card"><div class="stat-value">' + (props.unit_count || '?') + '</div>';
-    html += '<div class="stat-label">Units</div></div>';
-    html += '<div class="stat-card"><div class="stat-value">' + this.formatNumber(props.total_capacity_mw) + '</div>';
-    html += '<div class="stat-label">MW net capacity</div></div>';
-    html += '</div>';
+    html += this.renderStatRow([
+      { value: props.unit_count || '?', label: 'Units' },
+      { value: this.formatNumber(props.total_capacity_mw), label: 'MW net capacity' }
+    ]);
 
     // Unit table
     if (units && units.length > 0) {
@@ -173,12 +177,10 @@ var DetailPanel = {
   renderDecommissioned: function(props, units) {
     var html = this.renderPhoto(props.short_name);
 
-    html += '<div class="stat-row">';
-    html += '<div class="stat-card"><div class="stat-value">' + (props.unit_count || '?') + '</div>';
-    html += '<div class="stat-label">Units (shut down)</div></div>';
-    html += '<div class="stat-card"><div class="stat-value">' + this.formatNumber(props.total_capacity_mw) + '</div>';
-    html += '<div class="stat-label">MW (former)</div></div>';
-    html += '</div>';
+    html += this.renderStatRow([
+      { value: props.unit_count || '?', label: 'Units (shut down)' },
+      { value: this.formatNumber(props.total_capacity_mw), label: 'MW (former)' }
+    ]);
 
     // Status
     html += '<p style="font-size:11px; margin-bottom: var(--space-sm);">';
@@ -209,10 +211,7 @@ var DetailPanel = {
 
     // NLIC relevance
     if (props.notes) {
-      html += '<div style="margin-top: var(--space-sm); padding: var(--space-sm); border: var(--border-medium); background: var(--color-newsprint);">';
-      html += '<div style="font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px;">NLIC RELEVANCE</div>';
-      html += '<p style="font-size: 11px;">' + escapeHTML(props.notes) + '</p>';
-      html += '</div>';
+      html += this.renderCalloutBox('NLIC RELEVANCE', props.notes);
     }
 
     html += '<div class="table-source" style="margin-top: var(--space-md);">';
@@ -235,15 +234,14 @@ var DetailPanel = {
     html += '</p>';
 
     if (props.stored_tonnage_mt) {
-      html += '<div class="stat-row">';
-      html += '<div class="stat-card"><div class="stat-value">' + props.stored_tonnage_mt + '</div>';
-      html += '<div class="stat-label">metric tons stored</div></div>';
-      html += '</div>';
+      html += this.renderStatRow([
+        { value: props.stored_tonnage_mt, label: 'metric tons stored' }
+      ]);
     }
 
     if (sourcePlants && sourcePlants.length > 0) {
       html += '<p style="font-size:11px; margin-bottom: var(--space-sm);">';
-      html += '<strong>Source plants:</strong> ' + sourcePlants.join(', ');
+      html += '<strong>Source plants:</strong> ' + sourcePlants.map(escapeHTML).join(', ');
       html += '</p>';
     }
 
@@ -260,14 +258,17 @@ var DetailPanel = {
     }
 
     if (props.notes) {
-      html += '<div style="margin-top: var(--space-sm); padding: var(--space-sm); border: var(--border-medium); background: var(--color-newsprint);">';
-      html += '<div style="font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px;">KEY FINDING</div>';
-      html += '<p style="font-size: 11px;">' + escapeHTML(props.notes) + '</p>';
-      html += '</div>';
+      html += this.renderCalloutBox('KEY FINDING', props.notes);
     }
 
     html += '<div class="table-source" style="margin-top: var(--space-md);">';
-    html += 'Source: NRC ISFSI Licensing, Federal Register 2022-24993. Accessed ' + App.dataAccessDate + '.';
+    html += 'Source: NRC ISFSI Licensing';
+    if (props.nrc_docket === '72-0001') {
+      html += ', Federal Register 2022-24993';
+    } else {
+      html += ', 10 CFR 72 Subpart K, NRC Exemption Documents';
+    }
+    html += '. Accessed ' + App.dataAccessDate + '.';
     html += '</div>';
 
     return html;
@@ -294,14 +295,70 @@ var DetailPanel = {
     }
 
     if (props.nlic_relevance) {
-      html += '<div style="margin-top: var(--space-sm); padding: var(--space-sm); border: var(--border-medium); background: var(--color-newsprint);">';
-      html += '<div style="font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px;">NLIC RELEVANCE</div>';
-      html += '<p style="font-size: 11px;">' + escapeHTML(props.nlic_relevance) + '</p>';
-      html += '</div>';
+      html += this.renderCalloutBox('NLIC RELEVANCE', props.nlic_relevance);
     }
 
     html += '<div class="table-source" style="margin-top: var(--space-md);">';
     html += 'Source: DOE Office of Science. Accessed ' + App.dataAccessDate + '.';
+    html += '</div>';
+
+    return html;
+  },
+
+  /* --- Render conversion facility detail --- */
+  renderConversion: function(props) {
+    var html = this.renderPhoto(props.short_name);
+
+    html += '<p style="font-size:11px; margin-bottom: var(--space-sm);">';
+    html += '<strong>Function:</strong> ' + escapeHTML(props.type || 'Uranium conversion');
+    html += '</p>';
+
+    html += '<p style="font-size:11px; margin-bottom: var(--space-sm);">';
+    html += '<strong>Process:</strong> ' + escapeHTML(props.feed || '?') + ' → ' + escapeHTML(props.product || '?');
+    html += ' (' + escapeHTML(props.process || '') + ')';
+    html += '</p>';
+
+    html += this.renderStatRow([
+      { value: this.formatNumber(props.licensed_capacity_mtu_yr), label: 'MTU/year licensed' },
+      { value: props.built || '?', label: 'Year built' }
+    ]);
+
+    html += '<p style="font-size:11px; margin-bottom: var(--space-sm);">';
+    html += '<strong>Operator:</strong> ' + escapeHTML(props.operator || 'Unknown');
+    html += '</p>';
+
+    if (props.marketing) {
+      html += '<p style="font-size:11px; margin-bottom: var(--space-sm);">';
+      html += '<strong>Marketing agent:</strong> ' + escapeHTML(props.marketing);
+      html += '</p>';
+    }
+
+    html += '<p style="font-size:11px; margin-bottom: var(--space-sm);">';
+    html += '<strong>Status:</strong> ' + escapeHTML(props.status || 'Unknown');
+    if (props.most_recent_restart) {
+      html += ' (restarted ' + this.formatDate(props.most_recent_restart) + ')';
+    }
+    html += '</p>';
+
+    if (props.nrc_docket) {
+      html += '<p style="font-size:11px; margin-bottom: var(--space-sm);">';
+      html += '<strong>NRC Docket:</strong> ' + props.nrc_docket;
+      if (props.nrc_license) html += ' (License ' + props.nrc_license + ')';
+      html += '</p>';
+    }
+
+    if (props.license_expiration) {
+      html += '<p style="font-size:11px; margin-bottom: var(--space-sm);">';
+      html += '<strong>License expiration:</strong> ' + this.formatDate(props.license_expiration);
+      html += '</p>';
+    }
+
+    if (props.notes) {
+      html += this.renderCalloutBox('NLIC RELEVANCE', props.notes);
+    }
+
+    html += '<div class="table-source" style="margin-top: var(--space-md);">';
+    html += 'Source: NRC Facility Info Finder, ConverDyn, Solstice Advanced Materials. Accessed ' + App.dataAccessDate + '.';
     html += '</div>';
 
     return html;
@@ -317,7 +374,25 @@ var DetailPanel = {
       '</div>';
   },
 
-  /* --- Helpers --- */
+  /* --- Shared rendering helpers --- */
+  renderCalloutBox: function(label, content) {
+    return '<div style="margin-top: var(--space-sm); padding: var(--space-sm); border: var(--border-medium); background: var(--color-newsprint);">' +
+      '<div style="font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 1px; margin-bottom: 4px;">' + label + '</div>' +
+      '<p style="font-size: 11px;">' + escapeHTML(content) + '</p>' +
+      '</div>';
+  },
+
+  renderStatRow: function(cards) {
+    var html = '<div class="stat-row">';
+    for (var i = 0; i < cards.length; i++) {
+      html += '<div class="stat-card"><div class="stat-value">' + cards[i].value + '</div>';
+      html += '<div class="stat-label">' + cards[i].label + '</div></div>';
+    }
+    html += '</div>';
+    return html;
+  },
+
+  /* --- Formatting helpers --- */
   formatNumber: function(n) {
     if (n === undefined || n === null) return '?';
     return Number(n).toLocaleString();
