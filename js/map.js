@@ -40,37 +40,28 @@ var MapView = {
 
   /* --- Initialize map --- */
   init: function() {
+    var self = this;
+
+    // Fetch Protomaps style, then create the map
+    fetch('https://api.protomaps.com/styles/v5/light/en.json?key=f1de8450ff699b1a')
+      .then(function(r) { return r.json(); })
+      .then(function(style) {
+        // Remove style-level center/zoom so our constructor values take precedence
+        delete style.center;
+        delete style.zoom;
+        self._createMap(style);
+      })
+      .catch(function(err) {
+        console.error('Failed to load map style:', err);
+      });
+  },
+
+  _createMap: function(style) {
+    var self = this;
+
     this.instance = new maplibregl.Map({
       container: 'map',
-      style: {
-        version: 8,
-        glyphs: 'https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf',
-        sources: {
-          'osm-tiles': {
-            type: 'raster',
-            tiles: [
-              'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              'https://b.tile.openstreetmap.org/{z}/{x}/{y}.png',
-              'https://c.tile.openstreetmap.org/{z}/{x}/{y}.png'
-            ],
-            tileSize: 256,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          }
-        },
-        layers: [
-          {
-            id: 'osm-base',
-            type: 'raster',
-            source: 'osm-tiles',
-            paint: {
-              'raster-saturation': -0.4,
-              'raster-brightness-min': 0.15,
-              'raster-brightness-max': 0.95,
-              'raster-contrast': -0.15
-            }
-          }
-        ]
-      },
+      style: style,
       center: [-89.0, 40.0],
       zoom: 6.2,
       minZoom: 4.7
@@ -78,11 +69,8 @@ var MapView = {
 
     this.instance.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-left');
 
-    var self = this;
-
     this.instance.on('error', function(e) {
       var errMsg = e.error ? e.error.message || '' : '';
-      // Show user-facing error for data/source load failures
       var isDataError = errMsg.indexOf('404') !== -1 || errMsg.indexOf('Failed to fetch') !== -1 ||
           errMsg.indexOf('NetworkError') !== -1 || errMsg.indexOf('JSON') !== -1 ||
           errMsg.indexOf('source') !== -1 || errMsg.indexOf('geojson') !== -1;
@@ -102,7 +90,13 @@ var MapView = {
     });
 
     this.instance.on('load', function() {
-      self.addAllSources();
+      var map = self.instance;
+      var sourceFiles = self._sourceFiles;
+      var names = Object.keys(sourceFiles);
+      for (var i = 0; i < names.length; i++) {
+        map.addSource(names[i], { type: 'geojson', data: sourceFiles[names[i]] });
+      }
+
       self.addAllLayers();
       self.setupInteractions();
 
@@ -112,55 +106,19 @@ var MapView = {
     });
   },
 
-  /* --- Add data sources --- */
-  addAllSources: function() {
-    var map = this.instance;
-
-    map.addSource('il-boundary', {
-      type: 'geojson',
-      data: 'data/il_boundary.geojson'
-    });
-
-    map.addSource('reactors', {
-      type: 'geojson',
-      data: 'data/reactors.geojson'
-    });
-
-    map.addSource('decommissioned', {
-      type: 'geojson',
-      data: 'data/decommissioned.geojson'
-    });
-
-    map.addSource('isfsi', {
-      type: 'geojson',
-      data: 'data/isfsi.geojson'
-    });
-
-    map.addSource('labs', {
-      type: 'geojson',
-      data: 'data/national-labs.geojson'
-    });
-
-    map.addSource('transmission', {
-      type: 'geojson',
-      data: 'data/transmission/il_transmission_345kv.geojson'
-    });
-
-    map.addSource('railroads', {
-      type: 'geojson',
-      data: 'data/transport/il_class1_railroads.geojson'
-    });
-
-    map.addSource('waterways', {
-      type: 'geojson',
-      data: 'data/transport/il_waterways.geojson'
-    });
-
-    map.addSource('strahnet', {
-      type: 'geojson',
-      data: 'data/transport/il_strahnet.geojson'
-    });
+  /* --- Fetch and add data sources --- */
+  _sourceFiles: {
+    'nlic-boundary':   'data/il_boundary.geojson',
+    'nlic-reactors':      'data/reactors.geojson',
+    'nlic-decommissioned':'data/decommissioned.geojson',
+    'nlic-isfsi':         'data/isfsi.geojson',
+    'nlic-labs':          'data/national-labs.geojson',
+    'nlic-transmission':  'data/transmission/il_transmission_345kv.geojson',
+    'nlic-railroads':     'data/transport/il_class1_railroads.geojson',
+    'nlic-waterways':     'data/transport/il_waterways.geojson',
+    'nlic-strahnet':      'data/transport/il_strahnet.geojson'
   },
+
 
   /* --- Add map layers --- */
   addAllLayers: function() {
@@ -172,7 +130,7 @@ var MapView = {
     map.addLayer({
       id: 'il-boundary-fill',
       type: 'fill',
-      source: 'il-boundary',
+      source: 'nlic-boundary',
       paint: {
         'fill-color': c.newsprint,
         'fill-opacity': 0.15
@@ -182,7 +140,7 @@ var MapView = {
     map.addLayer({
       id: 'il-boundary-line',
       type: 'line',
-      source: 'il-boundary',
+      source: 'nlic-boundary',
       paint: {
         'line-color': c.ink,
         'line-width': 2.5,
@@ -195,7 +153,7 @@ var MapView = {
     map.addLayer({
       id: 'strahnet-lines',
       type: 'line',
-      source: 'strahnet',
+      source: 'nlic-strahnet',
       layout: { visibility: 'none' },
       paint: {
         'line-color': c.red,
@@ -207,7 +165,7 @@ var MapView = {
     map.addLayer({
       id: 'railroads-lines',
       type: 'line',
-      source: 'railroads',
+      source: 'nlic-railroads',
       layout: { visibility: 'none' },
       paint: {
         'line-color': c.gray70,
@@ -219,7 +177,7 @@ var MapView = {
     map.addLayer({
       id: 'waterways-lines',
       type: 'line',
-      source: 'waterways',
+      source: 'nlic-waterways',
       layout: { visibility: 'none' },
       paint: {
         'line-color': c.blue,
@@ -233,7 +191,7 @@ var MapView = {
     map.addLayer({
       id: 'transmission-lines',
       type: 'line',
-      source: 'transmission',
+      source: 'nlic-transmission',
       layout: { visibility: 'none' },
       paint: {
         'line-color': c.blue,
@@ -248,9 +206,9 @@ var MapView = {
     map.addLayer({
       id: 'isfsi-points',
       type: 'circle',
-      source: 'isfsi',
+      source: 'nlic-isfsi',
       paint: {
-        'circle-radius': 7,
+        'circle-radius': 8,
         'circle-color': c.yellow,
         'circle-stroke-color': c.ink,
         'circle-stroke-width': 1.5
@@ -261,7 +219,7 @@ var MapView = {
     map.addLayer({
       id: 'decommissioned-points',
       type: 'circle',
-      source: 'decommissioned',
+      source: 'nlic-decommissioned',
       paint: {
         'circle-radius': 8,
         'circle-color': c.gray50,
@@ -274,7 +232,7 @@ var MapView = {
     map.addLayer({
       id: 'labs-points',
       type: 'circle',
-      source: 'labs',
+      source: 'nlic-labs',
       paint: {
         'circle-radius': 8,
         'circle-color': c.blue,
@@ -287,12 +245,12 @@ var MapView = {
     map.addLayer({
       id: 'reactors-points',
       type: 'circle',
-      source: 'reactors',
+      source: 'nlic-reactors',
       paint: {
-        'circle-radius': 10,
+        'circle-radius': 8,
         'circle-color': c.red,
         'circle-stroke-color': c.ink,
-        'circle-stroke-width': 2
+        'circle-stroke-width': 1.5
       }
     });
 
@@ -300,10 +258,10 @@ var MapView = {
     map.addLayer({
       id: 'reactors-labels',
       type: 'symbol',
-      source: 'reactors',
+      source: 'nlic-reactors',
       layout: {
         'text-field': ['get', 'short_name'],
-        'text-font': ['Open Sans Semibold'],
+        'text-font': ['Noto Sans Medium'],
         'text-size': 11,
         'text-offset': [0, -1.8],
         'text-anchor': 'bottom'
@@ -319,10 +277,10 @@ var MapView = {
     map.addLayer({
       id: 'labs-labels',
       type: 'symbol',
-      source: 'labs',
+      source: 'nlic-labs',
       layout: {
         'text-field': ['get', 'short_name'],
-        'text-font': ['Open Sans Semibold'],
+        'text-font': ['Noto Sans Medium'],
         'text-size': 10,
         'text-offset': [0, -1.6],
         'text-anchor': 'bottom'
@@ -447,7 +405,7 @@ var MapView = {
           hoverPopup.remove();
           if (e.features && e.features.length > 0) {
             var feature = e.features[0];
-            var sourceLayer = layerId.split('-')[0];
+            var sourceLayer = layerId.replace('nlic-', '').replace(/-points$|-labels$/, '');
             if (typeof DetailPanel !== 'undefined') {
               DetailPanel.show(feature, sourceLayer);
             }
