@@ -193,9 +193,7 @@ body {
 }
 
 .detail-close {
-  position: absolute;
-  top: var(--space-sm);
-  right: var(--space-sm);
+  flex-shrink: 0;
   background: none;
   border: var(--border-medium);
   width: 28px;
@@ -233,11 +231,17 @@ body {
 }
 
 .detail-header {
-  position: relative;
-  padding-right: var(--space-xl);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
   margin-bottom: var(--space-lg);
   padding-bottom: var(--space-sm);
   border-bottom: var(--border-heavy);
+}
+
+.detail-header-text {
+  flex: 1;
+  min-width: 0;
 }
 
 .detail-header h2 {
